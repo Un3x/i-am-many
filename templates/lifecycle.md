@@ -1,0 +1,79 @@
+# Lifecycle — IAM Workflow Conventions
+
+Operational reference for IAM-managed projects. The CEO follows this; freelancer briefings cite it; the user can audit against it.
+
+## Task anatomy
+
+Every task in IAM has:
+- A **one-liner** (the user's original phrasing)
+- A **pitch** (CEO's proper framing using strategic memory)
+- A **scope** (defined by scoping freelancer, validated by CEO)
+- An **execution plan** (which freelancers, in what order, with what budget)
+- A **success metric** (deliverable check + impact score on parent priority)
+- A **staleness budget** (default 14 days; CEO can propose different at creation)
+
+## Default phases
+
+`Pitch → Scope → Validate → Execute → Review → Report`
+
+**Per-task adjustments are normal:**
+- Add **Research** before Scope when the problem space is unclear
+- Add **Spike** before Execute when uncertainty is high
+- Add **User-test** after Review when changes affect user experience
+- Skip **Review** for trivial, low-risk tasks (CEO judgment, document the call)
+
+## Separation rule
+
+Within any single task: **scoper ≠ executor ≠ reviewer**. Always.
+
+Within a phase, multiple agents in parallel are fine (e.g., two reviewers reviewing different aspects). Between phases, agents are always different.
+
+This dodges role-collapse and self-rationalization.
+
+## Freelancer briefing format
+
+Every freelancer spawn receives:
+
+1. **Task scope** — precise, written
+2. **Strategic context** — relevant excerpts from `vision.md` (not the whole file)
+3. **Tool / file pointers** — what to read, what to query, what tools they have
+4. **Expected output format** — what the freelancer must return
+5. **Budget / timebox** — how much effort the CEO has authorized
+
+Freelancers are **stateless and ephemeral**. They don't know prior work. They get briefed fresh on every spawn. The CEO holds the history.
+
+## Reporting format (every closed task)
+
+The CEO writes a Linear comment containing:
+
+- **What had to be done** — the brief
+- **What was done** — the deliverable
+- **Why** — the reasoning
+- **Measured signal** — raw automated data with sources (MCP queries, analytics deltas, error rates, PR/commit metrics)
+- **Judged impact** — interpretation; must cite measured signal; states confidence
+
+If automated signal doesn't exist for an aspect, the CEO names the proxy and its limitations explicitly.
+
+## Triggers
+
+- **Metric-reached** — CEO re-evaluates priorities. Three default options: cheap-win extension, ladder up to a new metric, close the priority.
+- **Staleness elapsed** — CEO surfaces the task in the next report with three default options: extend the budget, re-scope, cut.
+- **User override** — always wins, takes effect immediately. CEO halts running freelancers if user says stop.
+
+## Decisions
+
+Significant strategic decisions go into Linear comments tagged with a `decision` label, or into a dedicated `decisions.md` if/when volume warrants. Not every task is a decision — only those affecting vision, priorities, or major scope.
+
+## Approval gates
+
+- **Scope validation** — CEO decides (launch / cut) per task, citing economic state
+- **Next-task proposals** — user decides per CEO's report
+- **Vision / state edits** — user only; CEO proposes
+- **Metric definitions** — proposed by CEO at task creation; user can override
+
+## Honest constraints
+
+- The CEO is not autonomous; it runs when invoked
+- Triggers don't fire on their own without scheduled invocations
+- Cross-session memory depends on disciplined Linear writes
+- Some impact is genuinely difficult to measure; the proxy must be named, not avoided
