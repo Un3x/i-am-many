@@ -42,6 +42,12 @@ Every freelancer spawn receives:
 
 Freelancers are **stateless and ephemeral**. They don't know prior work. They get briefed fresh on every spawn. The CEO holds the history.
 
+## Spawn mechanism
+
+A freelancer is spawned via a single call to Claude Code's `Agent` tool. The CEO supplies the full briefing (per `## Freelancer briefing format` above) as the `prompt` parameter, a short `description` (3–5 words), and `subagent_type: general-purpose`. Each call instantiates a fresh, stateless agent with no memory of prior runs; the tool returns the freelancer's output as a single message, which the CEO synthesizes into the report.
+
+The CEO does not invent a spawn mechanism — `Agent` is the harness primitive. Briefing content is governed by the section above; this section only documents the operational mapping.
+
 ## Reporting format (every closed task)
 
 The CEO writes a Linear comment containing:
