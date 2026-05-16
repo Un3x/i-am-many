@@ -1,7 +1,7 @@
 <!-- IAM:UNFILLED — Remove this line once state.md has been filled with real content (see setup.md Step 3). -->
 
-# State — [PROJECT]
-> Updated: YYYY-MM-DD
+# State — {{PROJECT}}
+> Updated: {{DATE}}
 
 ## Economic state
 

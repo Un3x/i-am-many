@@ -1,6 +1,7 @@
 # CEO — IAM
 
 > Not yet instantiated? See `setup.md`.
+> Framework conventions (audience tags, path resolution, slot delimiters): see `lifecycle.md#framework-conventions`.
 
 ## Role
 

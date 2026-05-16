@@ -2,6 +2,38 @@
 
 Operational reference for IAM-managed projects. The CEO follows this; freelancer briefings cite it; the user can audit against it.
 
+## Framework conventions
+
+These conventions apply across all template and derived files in an IAM-managed project.
+
+### Audience tagging (C1)
+
+`setup.md` is dual-audience: parts are imperative instructions for the setup-runner, parts are descriptive handoff for the CEO. Every section in `setup.md` carries an explicit audience tag at the top, with exactly two values:
+
+- `Audience: setup-runner` — imperative; describes actions the runner takes.
+- `Audience: CEO` — descriptive / handoff; describes what the CEO should expect or do once setup is complete.
+
+Other template files are single-audience (CEO at runtime) and do not need per-section tags.
+
+### Path resolution (C2)
+
+**All paths in templates and derived files resolve from the project root.** In an instantiated IAM project:
+
+- `vision.md` lives at the project root.
+- `state.md` lives at the project root.
+- `CLAUDE.md` (the derived CEO instance) lives at the project root.
+- `lifecycle.md` and `setup.md` may live under `templates/` or be promoted to the project root; references inside `CLAUDE.md` and other files always assume root.
+
+Before Step 4 of `setup.md` runs, `vision.md` and `state.md` exist only under `templates/` as their initial form. Step 4 promotes them to the project root. After setup, the `templates/` copies of `vision.md` and `state.md` are no longer the operational instances.
+
+### Slot delimiter (C3)
+
+Slots — placeholders that the setup-runner substitutes with project-specific values — use Mustache-style `{{X}}` delimiters. Examples: `{{PROJECT}}`, `{{LINEAR_PROJECT_ID}}`, `{{DATE}}`.
+
+**Rule: slots are the only `{{...}}` tokens; nothing else uses double braces.**
+
+The square-bracket form `[X]` remains free for use as prose, documentation reference, or rhetorical placeholder. For example, the CEO template's generation footer mentions `[PROJECT]` and `[LINEAR_PROJECT_ID]` as documentation references; these are not slot markers and are not substituted.
+
 ## Task anatomy
 
 Every task in IAM has:

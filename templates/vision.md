@@ -1,6 +1,6 @@
 <!-- IAM:UNFILLED — Remove this line once vision.md has been filled with real content (see setup.md Step 3). -->
 
-# Vision — [PROJECT]
+# Vision — {{PROJECT}}
 
 ## North star
 
