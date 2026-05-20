@@ -2,7 +2,7 @@
 
 This document is the bootstrap layer for IAM. Run it once, per project, **before** the CEO does any operational work. Its job is to turn the `templates/` directory into a working instance:
 
-- Linear project created and reachable
+- Linear workspace reachable via the configured MCP server
 - Strategic memory files (`vision.md`, `state.md`) seeded with real content and promoted to the project root
 - Project-root `CLAUDE.md` derived from the CEO template
 - All template slots substituted with real values
@@ -22,7 +22,7 @@ Once this is done, the day-1 CEO can pass the Setup-complete check at the top of
 
 Before starting, you must have:
 
-- A Linear workspace you can administer (to create a new project and obtain its UUID)
+- A Linear workspace you can administer, with an MCP server registered for that workspace in your Claude Code config
 - A git repository for the IAM-managed project (this need not be the IAM framework repo itself)
 - The IAM `templates/` directory available inside that project repo (see Step 0)
 - A Claude Code session with the `Agent` tool and the `linear-*` MCP server configured
@@ -60,7 +60,6 @@ Every placeholder that must be substituted, and where each appears. Slots use th
 | Slot | Form | Appears in |
 | --- | --- | --- |
 | Project name | `{{PROJECT}}` | `templates/CEO.CLAUDE.md` (title, Role paragraph), `templates/vision.md` (title), `templates/state.md` (title) |
-| Linear project UUID | `{{LINEAR_PROJECT_ID}}` | `templates/CEO.CLAUDE.md` (Role bullet, Session-start step "Query Linear") |
 | Date | `{{DATE}}` | `templates/state.md` (Updated header) |
 
 In addition, two sentinel markers must be removed once their files are filled:
@@ -72,15 +71,15 @@ In addition, two sentinel markers must be removed once their files are filled:
 
 The CEO's Session-start Setup-complete check greps for `IAM:UNFILLED` in the project-root `vision.md` and `state.md`; presence on either file means instantiation is incomplete.
 
-## Step 1 — Create the Linear project
+## Step 1 — Verify Linear workspace + MCP connectivity
 
 *Audience: setup-runner*
 
-1. In Linear, create a new project for this IAM instance. Recommended name: the same string used for `{{PROJECT}}`.
-2. Capture the project's UUID. This is the value used for `{{LINEAR_PROJECT_ID}}` throughout the template substitutions. The CEO will use it on every session to query in-flight and recently-closed work.
-3. Confirm the project is reachable through the configured Linear MCP server (e.g., `list_projects` returns it).
+1. Confirm you have a Linear workspace you can administer for this project. (Each IAM CEO operates against one Linear workspace; sub-projects within the workspace are the CEO's own organizational tool, not its identity.)
+2. Register a Linear MCP server pointing at that workspace in your Claude Code config. The CEO will use this MCP on every session to query in-flight and recently-closed work.
+3. Verify connectivity: `claude mcp list` should show the Linear MCP as connected. If a workspace query (`list_issues`) returns results (even an empty list), the CEO can reach the workspace.
 
-Output of this step: the literal string for `{{LINEAR_PROJECT_ID}}`.
+Output of this step: a working MCP connection. No UUIDs or project IDs are required — the CEO operates at workspace scope.
 
 ## Step 2 — Fill template slots
 
@@ -88,13 +87,13 @@ Output of this step: the literal string for `{{LINEAR_PROJECT_ID}}`.
 
 Substitute the slots from the inventory across the three template files:
 
-- `templates/CEO.CLAUDE.md` — replace every `{{PROJECT}}` with the project name; replace every `{{LINEAR_PROJECT_ID}}` with the UUID from Step 1.
+- `templates/CEO.CLAUDE.md` — replace every `{{PROJECT}}` with the project name.
 - `templates/vision.md` — replace `{{PROJECT}}` with the project name.
 - `templates/state.md` — replace `{{PROJECT}}` with the project name; replace `{{DATE}}` with today's date.
 
 Do this **in the template files themselves** only if you took the fork-for-single-project branch in Step 0. If you took the reusable-framework branch, leave the templates untouched and defer substitution to Step 4 (it will operate on the derived `CLAUDE.md` only).
 
-Leave the `[PROJECT]` / `[LINEAR_PROJECT_ID]` strings in the `CEO.CLAUDE.md` generation footer untouched — those are documentation references, not slot markers (see `lifecycle.md#framework-conventions`).
+Leave the `[PROJECT]` string in the `CEO.CLAUDE.md` generation footer untouched — it is a documentation reference, not a slot marker (see `lifecycle.md#framework-conventions`).
 
 ## Step 3 — Initialize strategic memory
 
@@ -122,8 +121,8 @@ These files are user-owned from this point on. The CEO may propose changes; the 
 1. Copy `templates/CEO.CLAUDE.md` to the project root as `CLAUDE.md`.
 2. Apply slot substitutions to the derived `CLAUDE.md` based on which Step 0 branch you took:
    - **Fork-for-single-project branch** (Step 2 already substituted the templates): copy with no additional substitution needed.
-   - **Reusable-framework branch** (Step 2 was a no-op): apply the `{{PROJECT}}` → project name and `{{LINEAR_PROJECT_ID}}` → UUID substitutions to the derived `CLAUDE.md` now.
-3. Preserve the generation footer (`*This file is a template. …*`) verbatim. The footer references `[PROJECT]` and `[LINEAR_PROJECT_ID]` as documentation, not as slot markers — do not substitute those occurrences. The footer must remain intact so the relationship between template and instance stays auditable.
+   - **Reusable-framework branch** (Step 2 was a no-op): apply the `{{PROJECT}}` → project name substitution to the derived `CLAUDE.md` now.
+3. Preserve the generation footer (`*This file is a template. …*`) verbatim. The footer references `[PROJECT]` as documentation, not as a slot marker — do not substitute that occurrence. The footer must remain intact so the relationship between template and instance stays auditable.
 4. **Promote strategic memory to the project root.** Move (or copy, if you want the template originals preserved) `templates/vision.md` and `templates/state.md` to the project root:
    ```bash
    mv templates/vision.md vision.md
@@ -155,14 +154,13 @@ Before declaring setup complete, walk the **Bootstrap-readiness checklist** (bel
 
 Each item is a binary check. The setup-runner walks the checklist at the end of Step 6 (self-check); the CEO re-walks it on its first Session-start before declaring setup complete and starting operational work. Either side flags a failure by halting and returning to the relevant step.
 
-- [ ] Linear project exists and is reachable via the MCP server.
-- [ ] `{{LINEAR_PROJECT_ID}}` substituted everywhere it appears (no literal `{{LINEAR_PROJECT_ID}}` string remains in the project-root `CLAUDE.md`).
+- [ ] Linear workspace is reachable via the configured MCP server (`claude mcp list` shows it connected).
 - [ ] `{{PROJECT}}` substituted everywhere it appears (no literal `{{PROJECT}}` string remains in `CLAUDE.md`, `vision.md`, or `state.md`).
 - [ ] `vision.md` and `state.md` exist **at the project root** (Step 4 promotion complete; not only present under `templates/`).
 - [ ] `vision.md` contains real content (North star, Current focuses, Out of scope all populated) and **no** `IAM:UNFILLED` sentinel.
 - [ ] `state.md` contains real content (Economic state, Notes for the CEO populated; `Updated:` date set) and **no** `IAM:UNFILLED` sentinel.
 - [ ] Project-root `CLAUDE.md` exists, derived from `templates/CEO.CLAUDE.md`.
-- [ ] Project-root `CLAUDE.md` footer is intact (matches the template footer verbatim) and contains no substituted slot values — its `[PROJECT]` and `[LINEAR_PROJECT_ID]` occurrences are documentation references and must remain literal.
+- [ ] Project-root `CLAUDE.md` footer is intact (matches the template footer verbatim) and contains no substituted slot values — its `[PROJECT]` occurrence is a documentation reference and must remain literal.
 - [ ] `templates/lifecycle.md` is reachable from the project root (sibling or via the templates directory).
 
 When every box is checked, setup is done. The CEO proceeds to the bootstrap routine defined in `CLAUDE.md`.
