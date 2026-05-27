@@ -31,25 +31,14 @@ Before starting, you must have:
 
 *Audience: setup-runner*
 
-`setup.md` operates on files under `templates/`. Before running any other step, ensure that directory exists inside the project repo. Two supported branches:
+`setup.md` operates on files under `templates/`. Before running any other step, ensure that directory exists inside the project repo. The IAM framework is consumed as a reusable bundle: copy `templates/` into the project repo without mutating the source; substitution happens on the derived `CLAUDE.md` in Step 4.
 
-1. **Fork-for-single-project.** The IAM framework repo (or a clone) **is** the project repo. You will keep editing `templates/` directly during Step 2, and the derived `CLAUDE.md` will sit alongside `templates/` at the repo root.
-   - Action: `git clone <iam-framework-repo-url> <project-name> && cd <project-name>`.
-   - Step 2 will mutate `templates/` in-place.
+Action:
+```bash
+cp -r <path-to-iam-framework>/templates <project-repo>/templates
+```
 
-2. **Reusable framework.** The project repo is separate; IAM is consumed as a reusable bundle. `templates/` is copied (or vendored as a git submodule / subtree) into the project repo without being mutated, and Step 2's substitutions are deferred to Step 4.
-   - Action (copy):
-     ```bash
-     cp -r <path-to-iam-framework>/templates <project-repo>/templates
-     ```
-   - Or (submodule):
-     ```bash
-     git -C <project-repo> submodule add <iam-framework-repo-url> iam-framework
-     ln -s iam-framework/templates <project-repo>/templates
-     ```
-   - Step 2 will be a no-op on the templates; substitution happens only on the derived `CLAUDE.md` in Step 4.
-
-Pick one branch and remember which — Step 2 and Step 4 both reference the choice.
+> **IAM-on-IAM sidebar.** If the project repo and the IAM framework repo are the same git repo (IAM-on-IAM), skip the copy step and substitute the templates in-place; otherwise follow the canonical path above.
 
 ## Slot inventory
 
@@ -85,13 +74,7 @@ Output of this step: a working MCP connection. No UUIDs or project IDs are requi
 
 *Audience: setup-runner*
 
-Substitute the slots from the inventory across the three template files:
-
-- `templates/CEO.CLAUDE.md` — replace every `{{PROJECT}}` with the project name.
-- `templates/vision.md` — replace `{{PROJECT}}` with the project name.
-- `templates/state.md` — replace `{{PROJECT}}` with the project name; replace `{{DATE}}` with today's date.
-
-Do this **in the template files themselves** only if you took the fork-for-single-project branch in Step 0. If you took the reusable-framework branch, leave the templates untouched and defer substitution to Step 4 (it will operate on the derived `CLAUDE.md` only).
+The slot inventory above lists every placeholder that must be substituted across the template files (`templates/CEO.CLAUDE.md`, `templates/vision.md`, `templates/state.md`). Under the canonical reusable-framework path, **leave the templates untouched here** — substitution happens on the derived `CLAUDE.md` and on the promoted strategic-memory files in Step 4. (Under the IAM-on-IAM sidebar from Step 0, substitute in-place now.)
 
 Leave the `[PROJECT]` string in the `CEO.CLAUDE.md` generation footer untouched — it is a documentation reference, not a slot marker (see `lifecycle.md#framework-conventions`).
 
@@ -119,9 +102,7 @@ These files are user-owned from this point on. The CEO may propose changes; the 
 *Audience: setup-runner*
 
 1. Copy `templates/CEO.CLAUDE.md` to the project root as `CLAUDE.md`.
-2. Apply slot substitutions to the derived `CLAUDE.md` based on which Step 0 branch you took:
-   - **Fork-for-single-project branch** (Step 2 already substituted the templates): copy with no additional substitution needed.
-   - **Reusable-framework branch** (Step 2 was a no-op): apply the `{{PROJECT}}` → project name substitution to the derived `CLAUDE.md` now.
+2. Apply the `{{PROJECT}}` → project name substitution to the derived `CLAUDE.md`.
 3. Preserve the generation footer (`*This file is a template. …*`) verbatim. The footer references `[PROJECT]` as documentation, not as a slot marker — do not substitute that occurrence. The footer must remain intact so the relationship between template and instance stays auditable.
 4. **Promote strategic memory to the project root.** Move (or copy, if you want the template originals preserved) `templates/vision.md` and `templates/state.md` to the project root:
    ```bash
@@ -129,6 +110,11 @@ These files are user-owned from this point on. The CEO may propose changes; the 
    mv templates/state.md state.md
    ```
    After this step, `vision.md` and `state.md` at the project root are the operational instances the CEO reads on every session. The CEO does **not** consult `templates/vision.md` or `templates/state.md` at runtime.
+4.5. **Propagate IAM skills to the project repo.** Copy the IAM framework's `.claude/skills/` directory into the project repo so the CEO's freelancer-skill stack is reachable from the project root:
+   ```bash
+   cp -r <path-to-iam-framework>/.claude/skills/ <project-repo>/.claude/skills/
+   ```
+   Under the IAM-on-IAM sidebar (Step 0), this step is a no-op — the skills already live at the repo root. Apply slot substitutions in skill files only if a skill explicitly declares one in its `SKILL.md`; the IAM skill set ships without `{{X}}` slots today.
 5. `lifecycle.md` is consulted by the CEO directly from `templates/lifecycle.md`; no promotion required. (Path references inside `CLAUDE.md` resolve from the project root per `lifecycle.md#framework-conventions`, so the CEO finds `lifecycle.md` via either location.)
 
 ## Step 5 — First-session handshake
@@ -162,6 +148,7 @@ Each item is a binary check. The setup-runner walks the checklist at the end of 
 - [ ] Project-root `CLAUDE.md` exists, derived from `templates/CEO.CLAUDE.md`.
 - [ ] Project-root `CLAUDE.md` footer is intact (matches the template footer verbatim) and contains no substituted slot values — its `[PROJECT]` occurrence is a documentation reference and must remain literal.
 - [ ] `templates/lifecycle.md` is reachable from the project root (sibling or via the templates directory).
+- [ ] `.claude/skills/` exists at the project repo with ≥1 IAM skill directory present (each containing a `SKILL.md`).
 
 When every box is checked, setup is done. The CEO proceeds to the bootstrap routine defined in `CLAUDE.md`.
 
