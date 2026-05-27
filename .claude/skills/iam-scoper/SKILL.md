@@ -26,6 +26,8 @@ The per-task brief overrides *what each letter covers*. The brief does not overr
 
 If the per-task brief asks for fewer than seven content sections, collapse content topics within A–G but keep H. If it asks for more, surface the conflict in your report rather than silently renumbering — the eight-section shape is the CEO's expected handshake.
 
+This A–H letter-indexed shape is scoper-specific. Sibling IAM skills (`iam-executor`, `iam-reviewer`, `iam-impact-report`, `iam-pitch-draft`, `iam-session-start`) carry their own role-shaped output structures; the A–H pattern does not generalize.
+
 ## Framework references
 
 Read first when invoked:

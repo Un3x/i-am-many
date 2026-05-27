@@ -64,14 +64,14 @@ These hold for every IAM review task:
 - **Cite each scope-claim audit independently.** Every executor claim ("affirmative ratio ~80%", "1 line of delta", "GPG-signed") gets a verifier — a `git show`, a `diff`, a `grep`, a cold count.
 - **Trust-but-verify the executor's measured signal.** Treat the receipt's numbers as hypotheses; recompute at least one before relying on the rest.
 - **Audit the brief boundary, not just the diff.** If the executor satisfied the scope but the scope itself underspecified an invariant the diff crosses, that is a defect — surface it.
-- **Return exactly one verdict.** PASS / PASS WITH NITS / REVISE / REJECT. No "PASS but…" without picking the right rung.
+- **Return exactly one verdict.** PASS / PASS WITH NITS / REVISE / REJECT. Pick the right rung; 'PASS' commits to no defects, 'PASS WITH NITS' commits to nits only, 'REVISE' to ≥1 defect.
 - **Separate nits from defects.** A defect blocks the verdict; a nit does not. Mislabeling a nit as a defect wastes a revision cycle; mislabeling a defect as a nit costs more downstream.
 - **Use absolute paths and exact diffs in citations.** A reviewer claim the CEO cannot re-verify in one shell command is half a claim.
 - **Anti-confabulation applies to the verdict.** No bare "looks good" — cite the audit table.
 
 ## IAM corpus carve-out
 
-IAM has no external corpus and no reflection-submission endpoint. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply in IAM-managed work. Only in-report reflection is in scope. The per-task brief does not need to repeat this carve-out — it is locked here.
+IAM has no external corpus and no reflection-submission endpoint. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply in IAM-managed work. Only in-verdict or in-report reflection is in scope. The per-task brief does not need to repeat this carve-out — it is locked here.
 
 ## Boundaries
 

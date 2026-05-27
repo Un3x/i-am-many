@@ -50,7 +50,7 @@ These hold for every IAM execution task:
 - **Verify the working-tree precondition before editing.** Run `git status` and `git diff` on target files; the brief's assumed state may have moved.
 - **Quote-back scope items before declaring done.** Map each scope item to a file delta or an explicit defer reason in the receipt.
 - **Use the substitution-diff move for mirror tasks.** When the brief says "instance is N rewrites behind template," reconstruct the prior template, substitute slots, diff against the live instance.
-- **Surface scope-creep candidates; do not absorb them.** Log adjacent fixes in *Follow-ups surfaced*; leave them for the CEO to launch as their own task.
+- **Surface scope-creep candidates in `Follow-ups surfaced`; leave them for the next pitch.** Log adjacent fixes in the receipt; leave them for the CEO to launch as their own task.
 - **Use absolute paths in the receipt.** Every file reference resolves without translation.
 - **Anti-confabulation applies to the receipt.** Cite the commit ref and file deltas; no bare "done" or "shipped" without numbers.
 

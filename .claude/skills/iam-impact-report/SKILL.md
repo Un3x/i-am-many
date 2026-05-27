@@ -13,7 +13,7 @@ This is the **first main-agent IAM skill** — it applies to the CEO main agent,
 
 ## What you produce
 
-A single Linear comment with the 7-section shape, returned as the next CEO message before any `save_comment` Linear write. The CEO retains the judgment; the skill shapes the output.
+A single Linear comment with the 7-section shape, returned as the next assistant message before any `save_comment` Linear write. The CEO retains the judgment; the skill shapes the output.
 
 ## Mandatory output structure
 
@@ -66,17 +66,18 @@ These hold for every IAM impact-report composition:
 
 ## IAM corpus carve-out
 
-IAM has no external corpus and no reflection-submission endpoint. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply in IAM-managed work. Only in-comment reflection (the *Reflection learnings* section) is in scope.
+IAM has no external corpus and no reflection-submission endpoint. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply in IAM-managed work. Only in-comment reflection (the *Reflection learnings* section) is in scope. The per-comment composition does not need to repeat this carve-out — it is locked here.
 
 ## Boundaries
 
 - Linear state transitions and follow-up issue filing are close-out routine, not this skill. Run them as separate tool calls after the comment lands.
 - Mechanical tool-call sequences (`save_comment` → `save_issue` state transition) are out of scope; this skill produces the comment text, the CEO applies it.
 - Composing pitches for *next* tasks is `iam-pitch-draft` territory (when that skill ships). This skill closes; that skill opens.
+- Sub-agents and `skill-creator` invocations are out of scope. One pass, one return.
 
 ## Closing rule
 
-Return the comment text as the next CEO message before any `save_comment` call, so the principal sees the draft before it lands in Linear.
+Return the comment text as the next assistant message before any `save_comment` call, so the principal sees the draft before it lands in Linear.
 
 ---
 *This skill is derived from `templates/CEO.CLAUDE.md` § Impact reporting + § Accountability. When those sections change, mirror the update here (precedent: IAM-18 / IAM-22 mirror pattern, tracked by IAM-24).*

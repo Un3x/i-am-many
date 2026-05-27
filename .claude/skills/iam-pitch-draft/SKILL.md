@@ -39,7 +39,7 @@ Six sections, headers fixed, order locked:
 (bulleted IAM-XX refs with one-line note each)
 ```
 
-**Conditionality clause.** `## Pitch` may be skipped when the Origin paragraph already establishes the Bucket tag and strategic framing self-evidently (e.g., direct follow-up pitches whose framing is implicit in the parent issue). Default: include `## Pitch`. Skip only when its content would purely restate Origin.
+**Conditionality clause.** `## Pitch` may be skipped when the Origin paragraph already establishes the Bucket tag and strategic framing self-evidently (e.g., direct follow-up pitches whose framing is implicit in the parent issue; precedent: IAM-26 was a direct execution follow-up where the parent issue's framing was implicit). Default: include `## Pitch`. Skip only when its content would purely restate Origin.
 
 **Optional additional sections** (include when justified):
 
@@ -77,7 +77,7 @@ These hold for every IAM pitch composition:
 
 ## IAM corpus carve-out
 
-IAM has no external corpus and no reflection-submission endpoint. Only in-pitch reflection (when the CEO chooses to include a reflection note in the issue description) is in scope. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply — that's freelancer-side. The per-CEO-turn does not need to repeat this carve-out — it is locked here.
+IAM has no external corpus and no reflection-submission endpoint. Only in-pitch reflection (when the CEO chooses to include a reflection note in the issue description) is in scope. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply — that's freelancer-side. The per-pitch composition does not need to repeat this carve-out — it is locked here.
 
 ## Boundaries
 

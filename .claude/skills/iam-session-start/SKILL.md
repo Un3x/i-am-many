@@ -22,7 +22,7 @@ Seven actions in fixed order:
 1. **Sentinel check** — grep `<!-- IAM:UNFILLED -->` in `vision.md` and `state.md`. If matched, **halt operational work** and walk the user through `setup.md`'s bootstrap-readiness checklist. The sentinel is the only legitimate session-start short-circuit.
 2. **Read `vision.md`** — strategic anchor.
 3. **Read `state.md`** — economic state, current notes. (Actions 2 and 3 are typically issued as parallel tool calls.)
-4. **Run `git status`.** If output flags `CLAUDE.md`, `state.md`, or any path under `templates/` as modified, run `git diff` on each match. Uncommitted changes in load-bearing areas are part of current state.
+4. **Run `git status`.** If output flags root `CLAUDE.md`, `state.md`, or any path under `templates/` as modified, run `git diff` on each match. Uncommitted changes in load-bearing areas are part of current state.
 5. **Query Linear** via the configured MCP server. Enumerate ALL live states: `backlog` + `unstarted` + `started` + recent `completed`. Do not pre-filter unless a stated reason applies (default filters routinely miss meta-issues sitting in Backlog).
 6. **Emit the summary line** in exactly this format: `"Active: <N>. Stalled: <N>. Last closed: <issue-id> (<title>)."`
 7. **Ask** the user what to focus on. State-then-ask is the protocol invariant; ask-first would short-circuit hydration.
@@ -60,7 +60,7 @@ These hold for every IAM session-start pass:
 
 ## IAM corpus carve-out
 
-IAM has no external corpus and no reflection-submission endpoint. Only in-session reflection (when the CEO chooses to surface session-start observations to the user) is in scope. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply — that's freelancer-side. The per-session protocol does not need to repeat this carve-out — it is locked here.
+IAM has no external corpus and no reflection-submission endpoint. Only in-session reflection (when the CEO chooses to surface session-start observations to the user) is in scope. `lifecycle.md` § "Freelancer briefing format" item 6(b) reflect-at-spawn routing does not apply — that's freelancer-side. The session-start protocol does not need to repeat this carve-out — it is locked here.
 
 ## Boundaries
 
