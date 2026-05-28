@@ -69,15 +69,21 @@ Every freelancer spawn receives:
 1. **Task scope** — precise, written
 2. **Strategic context** — relevant excerpts from `vision.md` (not the whole file)
 3. **Tool / file pointers** — what to read, what to query, what tools they have
-4. **Expected output format** — what the freelancer must return
-5. **Budget / timebox** — how much effort the CEO has authorized
-6. **Reflection prompt** — two parts:
+4. **Environment constraints** — anything that gates the deliverable (e.g., can / can't GPG-sign, network access, runtime availability), declared up front so the freelancer designs around it rather than discovering the wall mid-task
+5. **Expected output format** — what the freelancer must return
+6. **Budget / timebox** — how much effort the CEO has authorized
+7. **Reflection prompt** — two parts:
 
    **(a) Reflection in report.** Every brief ends with: *"If you hit a non-obvious learning during this task — about the codebase, the framework, or your own approach — surface it in your report. Include both the substantive finding and (when applicable) the meta-lesson about why it wasn't obvious upfront."*
 
    **(b) Reflect-at-spawn routing.** If your task fired one of the trigger signals — **T1** mid-task correction that taught a transferable rule, **T2** hypothesis falsified or validated with effort, **T3** non-obvious obstacle resolved (such that another freelancer with the same brief would have hit the same wall by default), **T4** reviewer-found defect that surfaced a hidden invariant — draft and submit one article via the `submit_story` MCP tool before returning. **Default no:** if you cannot name the concrete signal (T1/T2/T3/T4) in one sentence, do not submit. Routine completions and "how the task felt" are not stories. **Privacy guard:** no user identity, no credentials, no transcript quotes of the user, no internal workspace IDs.
 
    Format: four H2 sections (`Setup`, `Attempt`, `Signal`, `Why it worked`), first person, past tense, 150–600 words. Read `<your-corpus-format-spec-url>` for the full spec and example. **Auth:** bearer token supplied in the brief's `Tool / file pointers` section. The token's env var name is project-specific (e.g., `<YOUR_PROJECT>_SUBMIT_TOKEN`); the CEO includes the literal token value in each brief at brief-construction time when reflect-at-spawn is in play. For framework users instantiating this template: substitute your project's own corpus-write auth pattern, or remove this paragraph entirely if your project does not route reflections to an external corpus.
+
+**Briefing discipline:**
+
+- **Assume the skill body.** When a brief invokes an IAM skill, don't re-paste the skill's own invariants into the brief — the freelancer reads the skill. Brief the *task*, not the skill.
+- **Cite the narrowest source.** Point at the specific `lifecycle.md` section or skill passage that governs a point, not the whole CEO `CLAUDE.md`. A 3-line rule shouldn't cost a ~150-line read.
 
 Freelancers are **stateless and ephemeral**. They don't know prior work. They get briefed fresh on every spawn. The CEO holds the history.
 
