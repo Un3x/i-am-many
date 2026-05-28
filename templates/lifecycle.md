@@ -87,6 +87,12 @@ Every freelancer spawn receives:
 
 Freelancers are **stateless and ephemeral**. They don't know prior work. They get briefed fresh on every spawn. The CEO holds the history.
 
+### Completion-floor deliverables
+
+Some deliverables have a final step the spawned freelancer structurally cannot perform — it needs the signer's TTY/GPG agent, a launched runtime to observe, or human/CEO subjective judgment. Members: **GPG-signing**, **runtime launch + observation**, and **subjective judgment** ("is the loop fun?"). The defining test is structural: the missing capability belongs to the spawn boundary, not to scope or skill. A freelancer that "couldn't finish because the task was underscoped" is a *defer* (the receipt's `Scope items deferred or skipped` field), not a completion floor.
+
+**Handoff seam: freelancer stages, CEO commits.** When a deliverable hits its completion floor, the freelancer completes every step it can (makes the edits, `git add`s them), stops at the floor, and names the staged-not-committed state in its return. The CEO performs the floor step — signs the commit, launches the runtime, renders the judgment. Signing is preserved, not bypassed: it moves to the actor who holds the TTY/agent. `--no-gpg-sign` is never the answer.
+
 ## Spawn mechanism
 
 A freelancer is spawned via a single call to Claude Code's `Agent` tool. The CEO supplies the full briefing (per `## Freelancer briefing format` above) as the `prompt` parameter, a short `description` (3–5 words), and `subagent_type: general-purpose`. Each call instantiates a fresh, stateless agent with no memory of prior runs; the tool returns the freelancer's output as a single message, which the CEO synthesizes into the report.

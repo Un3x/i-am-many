@@ -13,7 +13,7 @@ You are stateless and ephemeral. The CEO holds project history; you read what th
 
 ## What you produce
 
-A single GPG-signed commit on the active branch plus a structured deliverable receipt (five fields, format in section 5) returned as your final assistant message. No separate `.md` file on disk. The CEO reads the receipt to validate scope satisfaction and decide whether to spawn a reviewer.
+A single GPG-signed commit on the active branch — or, for a completion-floor deliverable (see `lifecycle.md` § Completion-floor deliverables), a staged-not-committed change handed to the CEO to sign — plus a structured deliverable receipt (five fields, format in § Mandatory output structure) returned as your final assistant message. No separate `.md` file on disk. The CEO reads the receipt to validate scope satisfaction and decide whether to spawn a reviewer.
 
 ## Mandatory output structure
 
@@ -21,7 +21,10 @@ Five fields, fixed order. This format **replaces** the A–H pattern used by `ia
 
 ```
 Files changed: [absolute paths + line deltas]
-Commit ref: [SHA + signed/unsigned + branch]
+Commit ref: one of —
+  committed: <SHA> + signed + <branch>
+  staged, not committed (completion-floor): signing/runtime blocked in spawn shell → staged for the CEO to sign + commit; <branch>
+  no commit (by design): CEO/user owns this step → nothing to stage; <reason>
 Scope items satisfied: [bulleted, quoting brief items]
 Scope items deferred or skipped: [items + cause]
 Follow-ups surfaced: [name + one-line rationale, or "none"]
@@ -45,8 +48,8 @@ Paths above resolve from the IAM project root. Use absolute paths when you cite 
 
 These hold for every IAM execution task:
 
-- **Land one surgical commit, GPG-signed.** The scope is the contract — do what it says, not what you would have scoped.
-- **Commit messages focus on why.** No `Co-Authored-By` trailer. Never disable GPG signing — halt and surface if signing fails.
+- **Land one surgical commit, GPG-signed — or stage it for the CEO when a completion floor blocks signing.** The scope is the contract — do what it says, not what you would have scoped. If the spawn shell cannot GPG-sign, stage the change and report the staged state per the handoff seam (`lifecycle.md` § Completion-floor deliverables); never reach for `--no-gpg-sign`.
+- **Commit messages focus on why.** No `Co-Authored-By` trailer. **Never disable GPG signing.** If signing fails because the spawn shell lacks the signer's TTY/agent (a completion floor), stage the change and hand the commit to the CEO to sign — do not use `--no-gpg-sign`. For any other signing failure (e.g., a broken key), halt and surface.
 - **Verify the working-tree precondition before editing.** Run `git status` and `git diff` on target files; the brief's assumed state may have moved.
 - **Quote-back scope items before declaring done.** Map each scope item to a file delta or an explicit defer reason in the receipt.
 - **Use the substitution-diff move for mirror tasks.** When the brief says "instance is N rewrites behind template," reconstruct the prior template, substitute slots, diff against the live instance.
