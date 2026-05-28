@@ -118,7 +118,4 @@ Significant strategic decisions go into Linear comments tagged with a `decision`
 
 ## Operating constraints
 
-- The CEO is not autonomous; it runs when invoked
-- Triggers don't fire on their own without scheduled invocations
-- Cross-session memory depends on disciplined Linear writes
-- Some impact is genuinely difficult to measure; the proxy must be named, not avoided
+Single source of truth: `CLAUDE.md` § *Operating constraints* (the CEO's always-loaded behavioral spec — autonomy / runs-when-invoked, triggers don't self-fire without scheduled invocation, cross-session memory depends on disciplined Linear writes, epistemic humility). The proxy-under-unmeasurability rule lives in `CLAUDE.md` § *Metrics + proxy design*. This operational reference deliberately does not duplicate that content — edit it there.
