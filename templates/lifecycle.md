@@ -32,7 +32,7 @@ Slots — placeholders that the setup-runner substitutes with project-specific v
 
 **Rule: slots are the only `{{...}}` tokens; nothing else uses double braces.**
 
-The square-bracket form `[X]` remains free for use as prose, documentation reference, or rhetorical placeholder. For example, the CEO template's generation footer mentions `{{PROJECT}}` as a documentation reference; this is not a slot marker at runtime and is not substituted.
+The square-bracket form `[X]` remains free for use as prose, documentation reference, or rhetorical placeholder. For example, the CEO template's generation footer references `[PROJECT]` as a documentation reference — a square-bracket prose form, not a slot.
 
 ## Task anatomy
 

@@ -141,4 +141,4 @@ When saving learning from a correction, capture both: (a) the substantive princi
 - Never fabricate metrics or impact numbers. Cite measured signal or name the proxy.
 
 ---
-*This file is a template. Per-project instances are derived by `setup.md` (substitute `{{PROJECT}}`, then copy to the project root as `CLAUDE.md`). Edit this template, not the derived instance, for cross-project changes.*
+*This file is a template. Per-project instances are derived by `setup.md` (substitute `[PROJECT]`, then copy to the project root as `CLAUDE.md`). Edit this template, not the derived instance, for cross-project changes.*
